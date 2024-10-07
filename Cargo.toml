@@ -1,0 +1,23 @@
+[package]
+name = "termi"
+version = "0.0.0"
+authors = ["James Whaley <juicy66173@gmail.com>"]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+publish = false
+
+[[bin]]
+name = "supports-kitty-protocol"
+path = "./src/kitty.rs"
+
+[features]
+windows = ["crossterm/windows"]
+
+[dependencies]
+anyhow = "1.0"
+clap = { version = "4.5.19", features = ["wrap_help", "derive"] }
+crossterm = { version = "0.28.1", default-features = false, features = ["events"] }
+
+[patch.crates-io]
+crossterm = { git = "https://github.com/Juici/crossterm.git", branch = "fix/read-kitty-support" }
