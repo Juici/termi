@@ -1,7 +1,7 @@
 use std::process::ExitCode;
 
 use anyhow::Result;
-use clap::Parser;
+use clap::{Parser, Subcommand};
 
 mod desktop_notifications;
 mod keyboard_enhancement;
@@ -9,7 +9,20 @@ mod keyboard_enhancement;
 /// Terminal support utility.
 #[derive(Parser)]
 #[command(version)]
-enum Cli {
+struct Cli {
+    #[command(subcommand)]
+    command: Command,
+}
+
+#[derive(Subcommand)]
+enum Command {
+    /// Query the terminal for supported features.
+    #[command(subcommand)]
+    Query(Query),
+}
+
+#[derive(Subcommand)]
+enum Query {
     /// Query support for progressive keyboard enhancement.
     KeyboardEnhancement,
     /// Query support for desktop notifications.
@@ -17,8 +30,12 @@ enum Cli {
 }
 
 pub fn main() -> Result<ExitCode> {
-    match Cli::parse() {
-        Cli::KeyboardEnhancement => keyboard_enhancement::main(),
-        Cli::DesktopNotifications => desktop_notifications::main(),
+    let cli = Cli::parse();
+
+    match cli.command {
+        Command::Query(query) => match query {
+            Query::KeyboardEnhancement => keyboard_enhancement::main(),
+            Query::DesktopNotifications => desktop_notifications::main(),
+        },
     }
 }
