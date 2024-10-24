@@ -7,12 +7,12 @@ license = "MIT OR Apache-2.0"
 
 publish = false
 
-autobins = false
-default-run = "termi"
+[lib]
+name = "termi"
+path = "src/termi/lib.rs"
 
 [[bin]]
 name = "termi"
-path = "src/bin/main.rs"
 
 [dependencies]
 bitflags = "2.6"

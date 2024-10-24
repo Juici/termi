@@ -1,0 +1,7 @@
+{
+  "editor.rulers": [120],
+
+  "files.associations": {
+    "**/_termi": "shellscript"
+  }
+}
